@@ -21,7 +21,7 @@ class QuotesActivity : AppCompatActivity() {
 
     private fun initializeUi() {
         val factory = InjectorUtils.provideQuotesViewModelFactory()
-        val viewModel = ViewModelProviders.of(this, factory)
+        val viewModel = ViewModelProvider(this, factory)
             .get(QuotesViewModel::class.java)
         viewModel.getQuotes().observe(this, Observer { quotes ->
             val stringBuilder = StringBuilder()
