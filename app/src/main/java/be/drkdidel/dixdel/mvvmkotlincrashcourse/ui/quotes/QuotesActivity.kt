@@ -2,9 +2,7 @@ package be.drkdidel.dixdel.mvvmkotlincrashcourse.ui.quotes
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import be.drkdidel.dixdel.mvvmkotlincrashcourse.R
 import be.drkdidel.dixdel.mvvmkotlincrashcourse.data.Quote
 import be.drkdidel.dixdel.mvvmkotlincrashcourse.utilities.InjectorUtils
@@ -21,9 +19,10 @@ class QuotesActivity : AppCompatActivity() {
 
     private fun initializeUi() {
         val factory = InjectorUtils.provideQuotesViewModelFactory()
-        val viewModel = ViewModelProvider(this, factory)
-            .get(QuotesViewModel::class.java)
-        viewModel.getQuotes().observe(this, Observer { quotes ->
+        val viewModel by lazy {
+            ViewModelProvider(this, factory).get(QuotesViewModel::class.java)
+        }
+        viewModel.getQuotes().observe(this, { quotes ->
             val stringBuilder = StringBuilder()
             quotes.forEach { quote ->
                 stringBuilder.append("$quote\n\n")
